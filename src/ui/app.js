@@ -5,6 +5,7 @@ const taskDescription = document.querySelector('#taskDescription')
 
 taskForm.addEventListener('submit', e=>
 {
-    console.log('enviando')
+    console.log(taskName.value,taskDescription.value)
     e.preventDefault();
+    taskForm.reset()
 });
