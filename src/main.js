@@ -1,4 +1,4 @@
-const {BrowserWindow} = require('electron')
+const {BrowserWindow, ipcMain} = require('electron')
 
 function createWindow()
 {
@@ -6,16 +6,18 @@ function createWindow()
         {
             width:800,
             height:700,
-            webPreferences:
-            {
-                nodeIntegration:true
+            webPreferences: {
+                nodeIntegration: true,
+                contextIsolation: false
             }
-        }
-    )
+        })
 
     win.loadFile('src/index.html')
 }
 
-
+ipcMain.on('new-task', (e,args)=>
+{
+    console.log(args)
+})
 module.exports = {createWindow}
 
