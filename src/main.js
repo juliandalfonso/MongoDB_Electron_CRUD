@@ -1,5 +1,8 @@
 const {BrowserWindow, ipcMain} = require('electron')
 
+
+const Task = require('./models/Task')
+
 function createWindow()
 {
     const win = new BrowserWindow(
@@ -15,9 +18,11 @@ function createWindow()
     win.loadFile('src/index.html')
 }
 
-ipcMain.on('new-task', (e,args)=>
-{
-    console.log(args)
+ipcMain.on('new-task', async (e,args) => {
+    const newTask = new Task(args);
+    const taskSaved = await newTask.save();
+    console.log(taskSaved);
+    e.reply('new-task-created', taskSaved);
 })
 module.exports = {createWindow}
 

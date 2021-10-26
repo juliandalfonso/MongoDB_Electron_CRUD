@@ -2,7 +2,6 @@ const taskForm = document.querySelector('#taskForm')
 const taskName = document.querySelector('#taskName')
 const taskDescription = document.querySelector('#taskDescription')
 
-
 const {ipcRenderer} = require('electron')
 
 taskForm.addEventListener('submit', e=>
@@ -14,7 +13,11 @@ taskForm.addEventListener('submit', e=>
         name: taskName.value,
         description:taskDescription.value
     }
-    console.log(task)
     ipcRenderer.send('new-task', task)
     taskForm.reset()
 });
+
+ipcRenderer.on('new-task-created', (e,args)=>
+{
+    console.log(args)
+})
